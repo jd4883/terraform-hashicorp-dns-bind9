@@ -1,7 +1,7 @@
 resource "dns_cname_record" "cname" {
-  count      = length(local.cnames)
+  for_each = local.cnames
   cname      = "${local.a_record}.${var.domain}."
-  name       = local.cnames[count.index]
+  name       = each.value
   zone       = "${var.domain}."
   ttl        = var.ttl
   depends_on = [dns_a_record_set.a]
